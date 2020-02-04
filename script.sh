@@ -137,12 +137,16 @@ function interface() {
   local flag=0
   local stop=1
   while [ $stop -ne $flag ]; do
-    echo "Pressione 0 para parar"
+    echo "Insira o número \033[m0 para parar"
     echo ""
 
     showMenu
     getAction
     doValidAction
+
+    if [ $action -eq $flag ]; then
+      break;
+    fi
 
     if [ $error -eq $FALSE ]; then
       if [ $action -eq $flag ]; then
