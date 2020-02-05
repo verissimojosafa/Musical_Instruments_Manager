@@ -1,10 +1,10 @@
 #!/bin/bash
 
 function showMenu() {
-  echo "1. Listar"
-  echo "2. Cadastrar"
-  echo "3. Buscar"
-  echo "4. Remover"
+  echo "${ACTION_RETRIEVEALL}. Listar"
+  echo "${ACTION_CREATE}. Cadastrar"
+  echo "${ACTION_RETRIEVE}. Buscar"
+  echo "${ACTION_DELETE}. Remover"
 }
 
 function getAction() {
@@ -131,36 +131,40 @@ function delete() {
   sed -i /"$text"/d $FILENAME
 }
 
+function waitEnter() {
+    echo ""
+    echo "Pressione enter"
+    read
+}
+
 function interface() {
   echo "CR[U]D - Instrumentos Musicais"
 
   local flag=0
   local stop=1
   while [ $stop -ne $flag ]; do
-    echo "Insira o número \033[m0 para parar"
+    echo "Insira o número 0 para parar"
     echo ""
 
     showMenu
     getAction
     doValidAction
-
+    
     if [ $action -eq $flag ]; then
-      break;
+        break
     fi
 
     if [ $error -eq $FALSE ]; then
       if [ $action -eq $flag ]; then
         break
       fi
-
       doAction
     else
       echo $errorMsg
     fi
 
-    echo ""
-    echo "Pressione enter"
-    read
+    waitEnter
+
     clear
   done
 }
