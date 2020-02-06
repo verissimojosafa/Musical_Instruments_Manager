@@ -132,32 +132,27 @@ function delete() {
 }
 
 function waitEnter() {
-    echo ""
-    echo "Pressione enter"
-    read
+  echo ""
+  echo "Pressione enter"
+  read
 }
 
 function interface() {
   echo "CR[U]D - Instrumentos Musicais"
 
-  local flag=0
-  local stop=1
-  while [ $stop -ne $flag ]; do
-    echo "Insira o número 0 para parar"
+  while :; do
+    echo "Insira o número ${FLAG} para parar"
     echo ""
 
     showMenu
     getAction
     doValidAction
-    
-    if [ $action -eq $flag ]; then
-        break
+
+    if [ "$action" = "$FLAG" ]; then
+      break
     fi
 
     if [ $error -eq $FALSE ]; then
-      if [ $action -eq $flag ]; then
-        break
-      fi
       doAction
     else
       echo $errorMsg
@@ -183,6 +178,8 @@ function init() {
 
   MIN_ACTION=$ACTION_RETRIEVEALL
   MAX_ACTION=$ACTION_DELETE
+
+  FLAG=0
 
   FILENAME="instruments.txt"
 
